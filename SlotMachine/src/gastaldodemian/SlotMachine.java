@@ -104,6 +104,11 @@ public class SlotMachine {
 	private void Controlla(){
 		if(numeri[0] != numeri[1] && numeri[1] != numeri[2]){
 			titolo.setText("Hai stra perso, perdente");
+			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
+		}
+		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
+			titolo.setText("HAI MEGA VINTO, PERDENTE");
+			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
 		}
 	}
 }
