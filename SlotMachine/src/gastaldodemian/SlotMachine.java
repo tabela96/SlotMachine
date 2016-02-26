@@ -2,10 +2,22 @@ package gastaldodemian;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Label;
+
+import javax.swing.ImageIcon;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import com.sun.prism.Image;
+
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 public class SlotMachine {
 
-	protected Shell shell;
+	protected Shell shlSlotMachine;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 
 	/**
 	 * Launch the application.
@@ -26,9 +38,9 @@ public class SlotMachine {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		shlSlotMachine.open();
+		shlSlotMachine.layout();
+		while (!shlSlotMachine.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -39,10 +51,8 @@ public class SlotMachine {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
-
+		shlSlotMachine = new Shell();
+		shlSlotMachine.setSize(597, 390);
+		shlSlotMachine.setText("Slot Machine");
 	}
-
 }
