@@ -20,6 +20,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 
 public class SlotMachine {
@@ -29,7 +30,7 @@ public class SlotMachine {
 		public void run() {
 			int t = 0;
 			while(t < 303){
-				for(int i = 0; i < 3; i++){
+				for(int i = 0; i < 6; i++){
 					slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
 					System.out.println(i + " " + slots[i].getBounds());
 					if(slots[i].getBounds().y > 151){
@@ -38,7 +39,7 @@ public class SlotMachine {
 					}
 				}
 				try {
-					this.sleep(10);
+					this.sleep(1);
 					t++;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -53,6 +54,7 @@ public class SlotMachine {
 	private ImagesContainer immagini = new ImagesContainer();
 	private int[] numeri = new int[3];
 	private Label titolo;
+	private Text text;
 	
 	public static void main(String[] args) {
 		try {
@@ -89,7 +91,7 @@ public class SlotMachine {
 		Composite composite = new Composite(shlSlotMachine, SWT.BORDER);
 		composite.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		composite.setBounds(11, 71, 560, 152);
+		composite.setBounds(10, 70, 560, 152);
 		formToolkit.adapt(composite);
 		formToolkit.paintBordersFor(composite);
 		
@@ -105,12 +107,23 @@ public class SlotMachine {
 		slots[2].setBounds(400, 1, 150, 150);
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
-		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
-		label.setBounds(182, 0, 1, 150);
-		formToolkit.adapt(label, true, true);
+		slots[3] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[3].setBounds(10, -149, 150, 150);
+		slots[3].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/anguria.PNG"));
 		
+		slots[4] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[4].setBounds(205, -149, 150, 150);
+		slots[4].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
+		
+		slots[5] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[5].setBounds(400, -149, 150, 150);
+		slots[5].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
+		
+		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
+		label.setBounds(191, 0, 1, 152);
+		formToolkit.adapt(label, true, true);
 		Label label_1 = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
-		label_1.setBounds(392, 0, 16, 148);
+		label_1.setBounds(367, 0, 16, 148);
 		formToolkit.adapt(label_1, true, true);
 
 		
@@ -121,7 +134,7 @@ public class SlotMachine {
 				Gira();
 			}
 		});
-		btnGenera.setBounds(10, 282, 561, 68);
+		btnGenera.setBounds(446, 282, 125, 68);
 		formToolkit.adapt(btnGenera, true, true);
 		btnGenera.setText("GIOCA!");		
 		
@@ -129,11 +142,33 @@ public class SlotMachine {
 		titolo.setAlignment(SWT.CENTER);
 		titolo.setBounds(4, 4, 567, 61);
 		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
+		
+		Button btnNewGame = new Button(shlSlotMachine, SWT.NONE);
+		btnNewGame.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				text.setText("0, 00");
+			}
+		});
+		btnNewGame.setBounds(11, 281, 125, 69);
+		formToolkit.adapt(btnNewGame, true, true);
+		btnNewGame.setText("NUOVA PARTITA");
+		
+		Label lblSaldo = new Label(shlSlotMachine, SWT.NONE);
+		lblSaldo.setBounds(218, 309, 36, 15);
+		formToolkit.adapt(lblSaldo, true, true);
+		lblSaldo.setText("Saldo");
+		
+		text = new Text(shlSlotMachine, SWT.BORDER);
+		text.setBounds(277, 306, 76, 21);
+		text.setText("0,00");
+		formToolkit.adapt(text, true, true);
 	}
 	
 	private void Gira(){
 		GiraSlot g = new GiraSlot();
 		g.run();
+		
 	}
 	
 	private void generaSlot(){
@@ -152,6 +187,7 @@ public class SlotMachine {
 		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
 			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
 			titolo.setText("HAI MEGA VINTO, PERDENTE");
+			
 		}
 	}
 }
