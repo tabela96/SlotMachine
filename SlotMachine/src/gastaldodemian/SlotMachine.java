@@ -148,6 +148,9 @@ public class SlotMachine {
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if(text.getText()==null){
+					JOptionPane.showMessageDialog(null, "Per favore, inserisci credito");
+				}
 				btnGenera.setEnabled(true);
 			}
 		});
@@ -176,6 +179,7 @@ public class SlotMachine {
 		if(n==0){
 			JOptionPane.showMessageDialog(null, "Hai finito i soldi. GAME OVER!");
 			btnGenera.setEnabled(false);
+			text.setText("");
 		}
 	}
 	
@@ -225,7 +229,7 @@ public class SlotMachine {
 	private void vincita(int m){
 		num=text.getText();
 		n=Integer.parseInt(num);
-		n=n*m;
+		n=n+m;
 		num=String.valueOf(n);
 		text.setText(num);
 	}
