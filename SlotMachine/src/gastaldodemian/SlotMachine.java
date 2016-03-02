@@ -181,6 +181,7 @@ public class SlotMachine {
 		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
 			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
 			titolo.setText("HAI MEGA VINTO, PERDENTE");
+			
 		}
 	}
 }
