@@ -38,7 +38,7 @@ public class SlotMachine {
 					}
 				}
 				try {
-					this.sleep(1);
+					this.sleep(10);
 					t++;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -102,16 +102,16 @@ public class SlotMachine {
 		slots[1].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
 		
 		slots[2] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[2].setBounds(400, 1, 150, 150);
+		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
 		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
-		label.setBounds(161, 0, 1, 150);
+		label.setBounds(182, 0, 1, 150);
 		formToolkit.adapt(label, true, true);
 		
 		Label label_1 = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
 		label_1.setBounds(392, 0, 16, 148);
 		formToolkit.adapt(label_1, true, true);
-		slots[2].setBounds(400, 1, 150, 150);
-		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 
 		
 		Button btnGenera = new Button(shlSlotMachine, SWT.NONE);
