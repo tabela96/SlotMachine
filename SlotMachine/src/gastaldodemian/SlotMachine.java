@@ -88,7 +88,9 @@ public class SlotMachine {
 		shlSlotMachine.setSize(600, 400);
 		shlSlotMachine.setText("Slot Machine");
 		
-		Composite composite = new Composite(shlSlotMachine, SWT.NONE);
+		Composite composite = new Composite(shlSlotMachine, SWT.BORDER);
+		composite.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		composite.setBounds(11, 71, 560, 152);
 		formToolkit.adapt(composite);
 		formToolkit.paintBordersFor(composite);
@@ -104,8 +106,17 @@ public class SlotMachine {
 		slots[2] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
 		
 		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
+
 		label.setBounds(191, 0, 0, 152);
 		formToolkit.adapt(label, true, true);
+
+		label.setBounds(161, 0, 1, 150);
+		formToolkit.adapt(label, true, true);
+		
+		Label label_1 = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
+		label_1.setBounds(392, 0, 16, 148);
+		formToolkit.adapt(label_1, true, true);
+
 		slots[2].setBounds(400, 1, 150, 150);
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 
@@ -130,6 +141,7 @@ public class SlotMachine {
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				text.setText("0, 00");
 			}
 		});
 		btnNewGame.setBounds(11, 281, 125, 69);
@@ -143,12 +155,14 @@ public class SlotMachine {
 		
 		text = new Text(shlSlotMachine, SWT.BORDER);
 		text.setBounds(277, 306, 76, 21);
+		text.setText("0,00");
 		formToolkit.adapt(text, true, true);
 	}
 	
 	private void Gira(){
 		GiraSlot g = new GiraSlot();
 		g.run();
+		
 	}
 	
 	private void generaSlot(){
