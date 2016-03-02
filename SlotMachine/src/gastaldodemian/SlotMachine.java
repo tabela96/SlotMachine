@@ -20,6 +20,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 
 public class SlotMachine {
@@ -53,6 +54,7 @@ public class SlotMachine {
 	private ImagesContainer immagini = new ImagesContainer();
 	private int[] numeri = new int[3];
 	private Label titolo;
+	private Text text;
 	
 	public static void main(String[] args) {
 		try {
@@ -100,6 +102,10 @@ public class SlotMachine {
 		slots[1].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
 		
 		slots[2] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		
+		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
+		label.setBounds(191, 0, 0, 152);
+		formToolkit.adapt(label, true, true);
 		slots[2].setBounds(400, 1, 150, 150);
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 
@@ -111,7 +117,7 @@ public class SlotMachine {
 				Gira();
 			}
 		});
-		btnGenera.setBounds(10, 282, 561, 68);
+		btnGenera.setBounds(446, 282, 125, 68);
 		formToolkit.adapt(btnGenera, true, true);
 		btnGenera.setText("GIOCA!");		
 		
@@ -119,6 +125,25 @@ public class SlotMachine {
 		titolo.setAlignment(SWT.CENTER);
 		titolo.setBounds(4, 4, 567, 61);
 		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
+		
+		Button btnNewGame = new Button(shlSlotMachine, SWT.NONE);
+		btnNewGame.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnNewGame.setBounds(11, 281, 125, 69);
+		formToolkit.adapt(btnNewGame, true, true);
+		btnNewGame.setText("NUOVA PARTITA");
+		
+		Label lblSaldo = new Label(shlSlotMachine, SWT.NONE);
+		lblSaldo.setBounds(218, 309, 36, 15);
+		formToolkit.adapt(lblSaldo, true, true);
+		lblSaldo.setText("Saldo");
+		
+		text = new Text(shlSlotMachine, SWT.BORDER);
+		text.setBounds(277, 306, 76, 21);
+		formToolkit.adapt(text, true, true);
 	}
 	
 	private void Gira(){
