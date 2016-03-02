@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Label;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -55,6 +56,9 @@ public class SlotMachine {
 	private int[] numeri = new int[3];
 	private Label titolo;
 	private Text text;
+	private String num;
+	private int n;
+	private Button btnGenera;
 	
 	public static void main(String[] args) {
 		try {
@@ -121,7 +125,8 @@ public class SlotMachine {
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 
 		
-		Button btnGenera = new Button(shlSlotMachine, SWT.NONE);
+		btnGenera = new Button(shlSlotMachine, SWT.NONE);
+		btnGenera.setEnabled(false);
 		btnGenera.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -137,11 +142,13 @@ public class SlotMachine {
 		titolo.setBounds(4, 4, 567, 61);
 		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
 		
+		JOptionPane.showMessageDialog(null, "Benvenuto! Inserisci credito e premi nuova partita");
+		
 		Button btnNewGame = new Button(shlSlotMachine, SWT.NONE);
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				text.setText("0, 00");
+				btnGenera.setEnabled(true);
 			}
 		});
 		btnNewGame.setBounds(11, 281, 125, 69);
@@ -155,14 +162,21 @@ public class SlotMachine {
 		
 		text = new Text(shlSlotMachine, SWT.BORDER);
 		text.setBounds(277, 306, 76, 21);
-		text.setText("0,00");
 		formToolkit.adapt(text, true, true);
 	}
 	
 	private void Gira(){
 		GiraSlot g = new GiraSlot();
 		g.run();
-		
+		num=text.getText();
+		n=Integer.parseInt(num);
+		n=n-1;
+		num=String.valueOf(n);
+		text.setText(num);
+		if(n==0){
+			JOptionPane.showMessageDialog(null, "Hai finito i soldi. GAME OVER!");
+			btnGenera.setEnabled(false);
+		}
 	}
 	
 	private void generaSlot(){
@@ -181,7 +195,38 @@ public class SlotMachine {
 		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
 			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
 			titolo.setText("HAI MEGA VINTO, PERDENTE");
-			
+			if(numeri[0] == 0 && numeri[1] == 0 && numeri[2] == 0){
+				vincita(3);
+			}
+			if(numeri[0] == 1 && numeri[1] == 1 && numeri[2] == 1){
+				vincita(5);
+			}
+			if(numeri[0] == 2 && numeri[1] == 2 && numeri[2] == 2){
+				vincita(6);
+			}
+			if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
+				vincita(50);
+			}
+			if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
+				vincita(10);
+			}
+			if(numeri[0] == 5 && numeri[1] == 5 && numeri[2] == 5){
+				vincita(15);
+			}
+			if(numeri[0] == 6 && numeri[1] == 6 && numeri[2] == 6){
+				vincita(20);
+			}
+			if(numeri[0] == 7 && numeri[1] == 7 && numeri[2] == 7){
+				vincita(8);
+			}
 		}
+	}
+	
+	private void vincita(int m){
+		num=text.getText();
+		n=Integer.parseInt(num);
+		n=n*m;
+		num=String.valueOf(n);
+		text.setText(num);
 	}
 }
