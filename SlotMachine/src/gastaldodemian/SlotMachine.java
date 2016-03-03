@@ -148,12 +148,13 @@ public class SlotMachine {
 		titolo.setBounds(4, 4, 567, 61);
 		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
 		
-		JOptionPane.showMessageDialog(null, "Benvenuto! Inserisci credito e premi nuova partita");
+		//JOptionPane.showMessageDialog(null, "Benvenuto! Inserisci credito e premi nuova partita");
 		
 		Button btnNewGame = new Button(shlSlotMachine, SWT.NONE);
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				text.setText("10");
 				if(text.getText()==null){
 					JOptionPane.showMessageDialog(null, "Per favore, inserisci credito");
 				}
@@ -170,6 +171,7 @@ public class SlotMachine {
 		lblSaldo.setText("Saldo");
 		
 		text = new Text(shlSlotMachine, SWT.BORDER);
+		text.setEditable(false);
 		text.setBounds(277, 306, 76, 21);
 		formToolkit.adapt(text, true, true);
 	}
@@ -200,11 +202,11 @@ public class SlotMachine {
 	private void Controlla(){
 		if(numeri[0] != numeri[1] && numeri[1] != numeri[2]){
 			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
-			titolo.setText("Hai stra perso, perdente");
+			titolo.setText("Niente combo, RIPROVA ;)");
 		}
 		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
 			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
-			titolo.setText("HAI MEGA VINTO, PERDENTE");
+			titolo.setText("VINCITA!!");
 			if(numeri[0] == 0 && numeri[1] == 0 && numeri[2] == 0){
 				vincita(3);
 			}
