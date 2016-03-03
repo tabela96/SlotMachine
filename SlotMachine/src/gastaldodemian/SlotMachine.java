@@ -35,7 +35,6 @@ public class SlotMachine {
 					public void run(){
 						for(int i = 0; i < 6; i++){
 							slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
-							System.out.println(i + " " + slots[i].getBounds());
 							if(slots[i].getBounds().y > 151){
 								generaSlot(i);
 								slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
@@ -46,11 +45,13 @@ public class SlotMachine {
 				try {
 					this.sleep(1);
 					t++;
+					if(t == 1817){
+						Controlla();
+					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			Controlla();
 	    }
 	}
 
@@ -141,6 +142,7 @@ public class SlotMachine {
 		btnGenera.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				btnGenera.setEnabled(false);
 				Gira();
 			}
 		});
@@ -197,43 +199,48 @@ public class SlotMachine {
 	}
 	
 	private void generaSlot(int i){
-		numeri[i] = (int) (Math.random()*8);
+		numeri[i] = (int) (Math.random()*1);
 		slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 	}
 	
 	private void Controlla(){
-		if(numeri[0] != numeri[1] && numeri[1] != numeri[2]){
-			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
-			titolo.setText("Niente combo, RIPROVA ;)");
-		}
-		if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
-			titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
-			titolo.setText("VINCITA!!");
-			if(numeri[0] == 0 && numeri[1] == 0 && numeri[2] == 0){
-				vincita(3);
+		Display.getDefault().asyncExec(new Runnable(){
+			public void run(){
+				btnGenera.setEnabled(true);
+				if(numeri[0] != numeri[1] && numeri[1] != numeri[2]){
+					titolo.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+					titolo.setText("Niente combo, RIPROVA ;)");
+				}
+				if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
+					titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
+					titolo.setText("VINCITA!!");
+					if(numeri[0] == 0 && numeri[1] == 0 && numeri[2] == 0){
+						vincita(3);
+					}
+					if(numeri[0] == 1 && numeri[1] == 1 && numeri[2] == 1){
+						vincita(5);
+					}
+					if(numeri[0] == 2 && numeri[1] == 2 && numeri[2] == 2){
+						vincita(6);
+					}
+					if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
+						vincita(50);
+					}
+					if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
+						vincita(10);
+					}
+					if(numeri[0] == 5 && numeri[1] == 5 && numeri[2] == 5){
+						vincita(15);
+					}
+					if(numeri[0] == 6 && numeri[1] == 6 && numeri[2] == 6){
+						vincita(20);
+					}
+					if(numeri[0] == 7 && numeri[1] == 7 && numeri[2] == 7){
+						vincita(8);
+					}
+				}
 			}
-			if(numeri[0] == 1 && numeri[1] == 1 && numeri[2] == 1){
-				vincita(5);
-			}
-			if(numeri[0] == 2 && numeri[1] == 2 && numeri[2] == 2){
-				vincita(6);
-			}
-			if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
-				vincita(50);
-			}
-			if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
-				vincita(10);
-			}
-			if(numeri[0] == 5 && numeri[1] == 5 && numeri[2] == 5){
-				vincita(15);
-			}
-			if(numeri[0] == 6 && numeri[1] == 6 && numeri[2] == 6){
-				vincita(20);
-			}
-			if(numeri[0] == 7 && numeri[1] == 7 && numeri[2] == 7){
-				vincita(8);
-			}
-		}
+		});
 	}
 	
 	private void vincita(int m){
