@@ -199,7 +199,7 @@ public class SlotMachine {
 	}
 	
 	private void generaSlot(int i){
-		numeri[i] = (int) (Math.random()*1);
+		numeri[i] = (int) (Math.random()*8);
 		slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 	}
 	
