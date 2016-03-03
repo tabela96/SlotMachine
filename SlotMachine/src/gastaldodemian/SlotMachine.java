@@ -111,6 +111,18 @@ public class SlotMachine {
 		slots[2].setBounds(400, 1, 150, 150);
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
+		slots[3] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[3].setBounds(10, -149, 150, 150);
+		slots[3].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/anguria.PNG"));
+		
+		slots[4] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[4].setBounds(205, -149, 150, 150);
+		slots[4].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
+		
+		slots[5] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
+		slots[5].setBounds(400, -149, 150, 150);
+		slots[5].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
+		
 		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
 		label.setBounds(191, 0, 1, 152);
 		formToolkit.adapt(label, true, true);
