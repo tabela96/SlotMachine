@@ -30,27 +30,27 @@ public class SlotMachine {
 		
 		public void run() {
 			int t = 0;
-			while(t < 303){
+			while(t < 1818){
 				Display.getDefault().asyncExec(new Runnable(){
-					
 					public void run(){
 						for(int i = 0; i < 6; i++){
 							slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
 							System.out.println(i + " " + slots[i].getBounds());
 							if(slots[i].getBounds().y > 151){
-								generaSlot();
+								generaSlot(i);
 								slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
 							}
 						}
 					}
 				});
 				try {
-					this.sleep(10);
+					this.sleep(1);
 					t++;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
+			Controlla();
 	    }
 	}
 
@@ -58,7 +58,7 @@ public class SlotMachine {
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 	private Label[] slots = new Label[6];
 	private ImagesContainer immagini = new ImagesContainer();
-	private int[] numeri = new int[3];
+	private int[] numeri = new int[6];
 	private Label titolo;
 	private Text text;
 	private String num;
@@ -183,7 +183,7 @@ public class SlotMachine {
 	
 	private void Gira(){
 		GiraSlot g = new GiraSlot();
-		g.run();
+		g.start();
 		num=text.getText();
 		n=Integer.parseInt(num);
 		n=n-1;
@@ -196,12 +196,9 @@ public class SlotMachine {
 		}
 	}
 	
-	private void generaSlot(){
-		for(int i=0;i<3;i++){
-			numeri[i] = (int) (Math.random()*8);
-			slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
-		}
-		Controlla();
+	private void generaSlot(int i){
+		numeri[i] = (int) (Math.random()*8);
+		slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 	}
 	
 	private void Controlla(){
