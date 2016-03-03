@@ -31,16 +31,21 @@ public class SlotMachine {
 		public void run() {
 			int t = 0;
 			while(t < 303){
-				for(int i = 3; i < 6; i++){
-					slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
-					System.out.println(i + " " + slots[i].getBounds());
-					if(slots[i].getBounds().y > 151){
-						generaSlot();
-						slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
+				Display.getDefault().asyncExec(new Runnable(){
+					
+					public void run(){
+						for(int i = 0; i < 6; i++){
+							slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
+							System.out.println(i + " " + slots[i].getBounds());
+							if(slots[i].getBounds().y > 151){
+								generaSlot();
+								slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
+							}
+						}
 					}
-				}
+				});
 				try {
-					this.sleep(1);
+					this.sleep(10);
 					t++;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
