@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -82,6 +84,7 @@ public class SlotMachine {
 					e.printStackTrace();
 				}
 			}
+			clip1.close();
 	    }
 	}
 
@@ -99,6 +102,8 @@ public class SlotMachine {
 	private File vinci;
 	private AudioInputStream gira;
 	private AudioInputStream vincita;
+	private Clip clip1;
+	private Clip clip2;
 	
 	public static void main(String[] args) {
 		try {
@@ -111,6 +116,28 @@ public class SlotMachine {
 	
 	public SlotMachine(){
 		ruota = new File("src/Musica/Gira.wav");
+		vinci = new File("src/Musica/Vincita.wav");
+		try {
+			clip2=AudioSystem.getClip();
+		} catch (LineUnavailableException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		try {
+			clip1=AudioSystem.getClip();
+		} catch (LineUnavailableException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			vincita=AudioSystem.getAudioInputStream(vinci);
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			gira=AudioSystem.getAudioInputStream(ruota);
 		} catch (UnsupportedAudioFileException e) {
@@ -190,7 +217,13 @@ public class SlotMachine {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnGenera.setEnabled(false);
-				
+				try {
+					clip1.open(gira);
+					clip1.loop(0);
+				} catch (LineUnavailableException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				Gira();
 			}
 		});
@@ -241,10 +274,11 @@ public class SlotMachine {
 		num=String.valueOf(n);
 		text.setText(num);
 		if(n==0){
-			JOptionPane.showMessageDialog(null, "Hai finito i soldi. GAME OVER!");
+			//JOptionPane.showMessageDialog(null, "Hai finito i soldi. GAME OVER!");
 			btnGenera.setEnabled(false);
 			text.setText("");
 		}
+		
 	}
 	
 	private void generaSlot(int i){
