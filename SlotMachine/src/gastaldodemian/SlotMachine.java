@@ -31,37 +31,37 @@ public class SlotMachine {
 		
 		public void run() {
 			int t = 0;
-			while(t < 3636){
+			while(t < 3500){
 				final int a = t;
 				Display.getDefault().asyncExec(new Runnable(){
 					public void run(){
 						
-						if(a < 2424){
-							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 150, 150);
-							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 1, 150, 150);
+						if(a <= 1750){
+							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 188, 175);
+							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 1, 188, 175);
 						}
-						if(a < 3030){
-							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 1, 150, 150);
-							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 1, 150, 150);
+						if(a <= 2625){
+							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 1, 188, 175);
+							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 1, 188, 175);
 						}
-						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 1, 150, 150);
-						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 1, 150, 150);
+						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 1, 188, 175);
+						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 1, 188, 175);
 						
 						
 							try {
-								if(a > 2424)
+								if(a >= 1750)
 									Thread.sleep(1);
-								if(a > 3030)
+								if(a >= 2625)
 									Thread.sleep(1);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						
+						System.out.println(slots[0].getBounds().y);
 						for(int i = 0; i < 6; i++){
-							if(slots[i].getBounds().y > 151){
+							if(slots[i].getBounds().y > 174){
 								generaSlot(i);
-								slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
+								slots[i].setBounds(slots[i].getBounds().x, -175, 188, 175);
 							}
 						}
 					}
@@ -69,7 +69,7 @@ public class SlotMachine {
 				try {
 					this.sleep(1);
 					t++;
-					if(t == 3635){
+					if(t == 3500){
 						Controlla();
 					}
 				} catch (InterruptedException e) {
@@ -119,46 +119,40 @@ public class SlotMachine {
 	 */
 	protected void createContents() {
 		shlSlotMachine = new Shell();
-		shlSlotMachine.setSize(600, 400);
+		shlSlotMachine.setImage(SWTResourceManager.getImage("C:\\Users\\demianoleksandr\\Downloads\\Slot-machine-online-gratis-la-soluzione-egrave-a-portata-di-mano.png"));
+		shlSlotMachine.setSize(599, 400);
 		shlSlotMachine.setText("Slot Machine");
 		
 		Composite composite = new Composite(shlSlotMachine, SWT.BORDER);
 		composite.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		composite.setBounds(10, 70, 560, 152);
+		composite.setBounds(10, 70, 564, 175);
 		formToolkit.adapt(composite);
 		formToolkit.paintBordersFor(composite);
 		
 		slots[0] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[0].setBounds(10, 1, 150, 150);
-		slots[0].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/anguria.PNG"));
+		slots[0].setBounds(0, 0, 188, 175);
+		slots[0].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
 		slots[1] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[1].setBounds(205, 1, 150, 150);
-		slots[1].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
+		slots[1].setBounds(188, 0, 188, 175);
+		slots[1].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
 		slots[2] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[2].setBounds(400, 1, 150, 150);
+		slots[2].setBounds(376, 0, 188, 175);
 		slots[2].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
 		
 		slots[3] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[3].setBounds(10, -149, 150, 150);
-		slots[3].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/anguria.PNG"));
+		slots[3].setBounds(0, -175, 188, 175);
+		slots[3].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/arancia.PNG"));
 		
 		slots[4] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[4].setBounds(205, -149, 150, 150);
+		slots[4].setBounds(188, -175, 188, 175);
 		slots[4].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/uva.PNG"));
 		
 		slots[5] = formToolkit.createLabel(composite, "New Label", SWT.NONE);
-		slots[5].setBounds(400, -149, 150, 150);
+		slots[5].setBounds(376, -175, 188, 175);
 		slots[5].setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.PNG"));
-		
-		Label label = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
-		label.setBounds(191, 0, 1, 152);
-		formToolkit.adapt(label, true, true);
-		Label label_1 = new Label(composite, SWT.SEPARATOR | SWT.VERTICAL);
-		label_1.setBounds(367, 0, 16, 148);
-		formToolkit.adapt(label_1, true, true);
 
 		
 		btnGenera = new Button(shlSlotMachine, SWT.NONE);
@@ -224,7 +218,7 @@ public class SlotMachine {
 	}
 	
 	private void generaSlot(int i){
-		numeri[i] = (int) (Math.random()*8);
+		numeri[i] = (int) (Math.random()*6);
 		slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 	}
 	
