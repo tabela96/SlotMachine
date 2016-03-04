@@ -46,6 +46,17 @@ public class SlotMachine {
 						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 1, 150, 150);
 						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 1, 150, 150);
 						
+						
+							try {
+								if(a > 2424)
+									Thread.sleep(1);
+								if(a > 3030)
+									Thread.sleep(1);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
 						for(int i = 0; i < 6; i++){
 							if(slots[i].getBounds().y > 151){
 								generaSlot(i);
