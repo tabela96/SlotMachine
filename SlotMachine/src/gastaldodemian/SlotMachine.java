@@ -30,11 +30,23 @@ public class SlotMachine {
 		
 		public void run() {
 			int t = 0;
-			while(t < 1818){
+			while(t < 3636){
+				final int a = t;
 				Display.getDefault().asyncExec(new Runnable(){
 					public void run(){
+						
+						if(a < 3030){
+							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 150, 150);
+							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 1, 150, 150);
+						}
+						if(a < 3333){
+							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 1, 150, 150);
+							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 1, 150, 150);
+						}
+						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 1, 150, 150);
+						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 1, 150, 150);
+						
 						for(int i = 0; i < 6; i++){
-							slots[i].setBounds(slots[i].getBounds().x, slots[i].getBounds().y + 1, 150, 150);
 							if(slots[i].getBounds().y > 151){
 								generaSlot(i);
 								slots[i].setBounds(slots[i].getBounds().x, -151, 150, 150);
@@ -45,7 +57,7 @@ public class SlotMachine {
 				try {
 					this.sleep(1);
 					t++;
-					if(t == 1817){
+					if(t == 3635){
 						Controlla();
 					}
 				} catch (InterruptedException e) {
@@ -184,6 +196,7 @@ public class SlotMachine {
 	}
 	
 	private void Gira(){
+		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
 		GiraSlot g = new GiraSlot();
 		g.start();
 		num=text.getText();
