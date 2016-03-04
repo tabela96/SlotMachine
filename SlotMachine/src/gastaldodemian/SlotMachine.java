@@ -6,11 +6,15 @@ import org.eclipse.swt.widgets.Label;
 
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
+
 
 import com.sun.prism.Image;
 
@@ -22,6 +26,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import sun.audio.*;
+import java.io.*;
 
 
 
@@ -78,12 +84,29 @@ public class SlotMachine {
 	private String num;
 	private int n;
 	private Button btnGenera;
+	private File ruota;
+	private File vinci;
+	private AudioInputStream gira;
+	private AudioInputStream vincita;
 	
 	public static void main(String[] args) {
 		try {
 			SlotMachine window = new SlotMachine();
 			window.open();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public SlotMachine(){
+		ruota = new File("src/Musica/Gira.wav");
+		try {
+			gira=AudioSystem.getAudioInputStream(ruota);
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -156,6 +179,7 @@ public class SlotMachine {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnGenera.setEnabled(false);
+				
 				Gira();
 			}
 		});
