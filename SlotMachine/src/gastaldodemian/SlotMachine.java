@@ -35,11 +35,11 @@ public class SlotMachine {
 				Display.getDefault().asyncExec(new Runnable(){
 					public void run(){
 						
-						if(a < 3030){
+						if(a < 2424){
 							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 150, 150);
 							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 1, 150, 150);
 						}
-						if(a < 3333){
+						if(a < 3030){
 							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 1, 150, 150);
 							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 1, 150, 150);
 						}
