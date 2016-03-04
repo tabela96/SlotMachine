@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 
+
 public class SlotMachine {
 	
 	public class GiraSlot extends Thread {
