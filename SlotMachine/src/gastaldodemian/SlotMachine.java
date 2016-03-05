@@ -38,11 +38,21 @@ public class SlotMachine {
 	public class GiraSlot extends Thread {
 		
 		public void run() {
+			clip1.setFramePosition(0);
+			clip1.start();
+			
 			int t = 0;
 			while(t < 3500){
+				
 				final int a = t;
 				Display.getDefault().asyncExec(new Runnable(){
 					public void run(){
+						
+						if(!clip1.isActive()){
+							System.out.println("!isRunning");
+							clip1.setFramePosition(0);
+							clip1.start();
+						}
 						
 						if(a < 1750){
 							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 188, 175);
@@ -65,7 +75,6 @@ public class SlotMachine {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						System.out.println(slots[0].getBounds().y);
 						for(int i = 0; i < 6; i++){
 							if(slots[i].getBounds().y > 174){
 								generaSlot(i);
@@ -79,12 +88,13 @@ public class SlotMachine {
 					t++;
 					if(t == 3500){
 						Controlla();
+						clip1.setFramePosition(0);
+						clip1.stop();
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			clip1.close();
 	    }
 	}
 
@@ -155,6 +165,12 @@ public class SlotMachine {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
+		try {
+			clip1.open(gira);
+		} catch (LineUnavailableException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		shlSlotMachine.open();
 		shlSlotMachine.layout();
 		while (!shlSlotMachine.isDisposed()) {
@@ -211,13 +227,6 @@ public class SlotMachine {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnGenera.setEnabled(false);
-				try {
-					clip1.open(gira);
-					clip1.loop(0);
-				} catch (LineUnavailableException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				Gira();
 			}
 		});
@@ -309,18 +318,13 @@ public class SlotMachine {
 					if(numeri[0] == 5 && numeri[1] == 5 && numeri[2] == 5){
 						vincita(15);
 					}
-					if(numeri[0] == 6 && numeri[1] == 6 && numeri[2] == 6){
-						vincita(20);
-					}
-					if(numeri[0] == 7 && numeri[1] == 7 && numeri[2] == 7){
-						vincita(8);
-					}
 				}
 			}
 		});
 	}
 	
 	private void vincita(int m){
+		clip2.start();
 		num=text.getText();
 		n=Integer.parseInt(num);
 		n=n+m;
