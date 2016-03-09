@@ -4,31 +4,25 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 
-import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
-import com.sun.prism.Image;
 
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import sun.audio.*;
 import java.io.*;
 
 
@@ -38,6 +32,12 @@ public class SlotMachine {
 	public class GiraSlot extends Thread {
 		
 		public void run() {
+			
+			if(clip2.isActive()){
+				clip2.setFramePosition(0);
+				clip2.stop();
+			}
+			
 			clip1.setFramePosition(0);
 			clip1.start();
 			
@@ -49,32 +49,33 @@ public class SlotMachine {
 					public void run(){
 						
 						if(!clip1.isActive()){
-							System.out.println("!isRunning");
 							clip1.setFramePosition(0);
 							clip1.start();
 						}
 						
 						if(a < 1750){
-							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 1, 188, 175);
-							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 1, 188, 175);
+							slots[0].setBounds(slots[0].getBounds().x, slots[0].getBounds().y + 2, 188, 175);
+							slots[3].setBounds(slots[3].getBounds().x, slots[3].getBounds().y + 2, 188, 175);
 						}
 						if(a < 2625){
-							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 1, 188, 175);
-							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 1, 188, 175);
+							slots[1].setBounds(slots[1].getBounds().x, slots[1].getBounds().y + 2, 188, 175);
+							slots[4].setBounds(slots[4].getBounds().x, slots[4].getBounds().y + 2, 188, 175);
 						}
-						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 1, 188, 175);
-						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 1, 188, 175);
+						slots[2].setBounds(slots[2].getBounds().x, slots[2].getBounds().y + 2, 188, 175);
+						slots[5].setBounds(slots[5].getBounds().x, slots[5].getBounds().y + 2, 188, 175);
 						
 						
-							try {
-								if(a >= 1750)
-									Thread.sleep(1);
-								if(a >= 2625)
-									Thread.sleep(1);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						try {
+							if(a >= 1750)
+								Thread.sleep(1);
+							if(a >= 2625)
+								Thread.sleep(1);
+							if(a >= 3499)
+								return;
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						for(int i = 0; i < 6; i++){
 							if(slots[i].getBounds().y > 174){
 								generaSlot(i);
@@ -84,12 +85,10 @@ public class SlotMachine {
 					}
 				});
 				try {
-					this.sleep(1);
+					Thread.sleep(1);
 					t++;
 					if(t == 3500){
 						Controlla();
-						clip1.setFramePosition(0);
-						clip1.stop();
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -105,7 +104,6 @@ public class SlotMachine {
 	private int[] numeri = new int[6];
 	private Label titolo;
 	private Text text;
-	private String num;
 	private int n;
 	private Button btnGenera;
 	private File ruota;
@@ -114,6 +112,7 @@ public class SlotMachine {
 	private AudioInputStream vincita;
 	private Clip clip1;
 	private Clip clip2;
+	private boolean cheat = false;
 	
 	public static void main(String[] args) {
 		try {
@@ -167,6 +166,7 @@ public class SlotMachine {
 		createContents();
 		try {
 			clip1.open(gira);
+			clip2.open(vincita);
 		} catch (LineUnavailableException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,7 +185,7 @@ public class SlotMachine {
 	 */
 	protected void createContents() {
 		shlSlotMachine = new Shell();
-		shlSlotMachine.setImage(SWTResourceManager.getImage("C:\\Users\\demianoleksandr\\Downloads\\Slot-machine-online-gratis-la-soluzione-egrave-a-portata-di-mano.png"));
+		shlSlotMachine.setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.png"));
 		shlSlotMachine.setSize(599, 400);
 		shlSlotMachine.setText("Slot Machine");
 		
@@ -268,16 +268,12 @@ public class SlotMachine {
 	}
 	
 	private void Gira(){
-		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
+		titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
 		GiraSlot g = new GiraSlot();
 		g.start();
-		num=text.getText();
-		n=Integer.parseInt(num);
-		n=n-1;
-		num=String.valueOf(n);
-		text.setText(num);
+		n=Integer.parseInt(text.getText()) - 1;
+		text.setText(String.valueOf(n));
 		if(n==0){
-			//JOptionPane.showMessageDialog(null, "Hai finito i soldi. GAME OVER!");
 			btnGenera.setEnabled(false);
 			text.setText("");
 		}
@@ -285,38 +281,59 @@ public class SlotMachine {
 	}
 	
 	private void generaSlot(int i){
-		numeri[i] = (int) (Math.random()*6);
-		slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
+		if(i == 1){
+			int soldi = Integer.parseInt(text.getText());
+			if((int) (Math.random()*soldi) == 1){
+				cheat = true;
+			}
+		}
+		Print("Cheat: " + cheat);
+		if(!cheat){
+			numeri[i] = (int) (Math.random()*6);
+			slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
+		}
+		if(cheat){
+			if(i == 1 || i == 2){
+				numeri[i] = numeri[0];
+				slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
+			}
+			else{
+				numeri[i] = (int) (Math.random()*6);
+				slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
+			}
+		}
 	}
 	
 	private void Controlla(){
+		Print("Combo: " + numeri[0] + " " + numeri[1] + " " + numeri[2]);
 		Display.getDefault().asyncExec(new Runnable(){
 			public void run(){
+				if(clip1.isActive()){
+					clip1.setFramePosition(0);
+					clip1.stop();
+				}
 				btnGenera.setEnabled(true);
-				if(numeri[0] != numeri[1] && numeri[1] != numeri[2]){
-					titolo.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
-					titolo.setText("Niente combo, RIPROVA ;)");
+				if(numeri[0] != numeri[1] || numeri[1] != numeri[2] ||  numeri[0] != numeri[2]){
+					titoloSetText("Niente combo, RIPROVA ;)", 14);
 				}
 				if(numeri[0] == numeri[1] && numeri[1] == numeri[2]){
-					titolo.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
-					titolo.setText("VINCITA!!");
 					if(numeri[0] == 0 && numeri[1] == 0 && numeri[2] == 0){
-						vincita(3);
+						vincita(2);
 					}
 					if(numeri[0] == 1 && numeri[1] == 1 && numeri[2] == 1){
-						vincita(5);
+						vincita(3);
 					}
 					if(numeri[0] == 2 && numeri[1] == 2 && numeri[2] == 2){
-						vincita(6);
+						vincita(3);
 					}
 					if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
-						vincita(50);
+						vincita(8);
 					}
 					if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
-						vincita(10);
+						vincita(3);
 					}
 					if(numeri[0] == 5 && numeri[1] == 5 && numeri[2] == 5){
-						vincita(15);
+						vincita(4);
 					}
 				}
 			}
@@ -325,10 +342,18 @@ public class SlotMachine {
 	
 	private void vincita(int m){
 		clip2.start();
-		num=text.getText();
-		n=Integer.parseInt(num);
-		n=n+m;
-		num=String.valueOf(n);
-		text.setText(num);
+		titoloSetText("Vincita: x" + m, 20);
+		n=Integer.parseInt(text.getText());
+		n=n*m;
+		text.setText(String.valueOf(n));
+	}
+	
+	private void titoloSetText(String text, int font){
+		titolo.setFont(SWTResourceManager.getFont("Segoe UI", font, SWT.NORMAL));
+		titolo.setText(text);
+	}
+	
+	private void Print(String s){
+		System.out.println(s);
 	}
 }
