@@ -245,7 +245,7 @@ public class SlotMachine {
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				text.setText("2");
+				text.setText("10");
 				if(text.getText()==null){
 					JOptionPane.showMessageDialog(null, "Per favore, inserisci credito");
 				}
@@ -263,39 +263,34 @@ public class SlotMachine {
 		
 		text = new Text(shlSlotMachine, SWT.BORDER);
 		text.setEditable(false);
-		text.setBounds(277, 306, 76, 21);
+		text.setBounds(260, 306, 93, 21);
 		formToolkit.adapt(text, true, true);
 	}
 	
 	private void Gira(){
-		n=Integer.parseInt(text.getText()) - 1;
-		if(n >= 0){
+		if(Soldi() > 0){
 			titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
 			GiraSlot g = new GiraSlot();
 			g.start();
-			
-			text.setText(String.valueOf(n));
-			if(n==0){
-				btnGenera.setEnabled(false);
-				text.setText("");
-			}
+			text.setText(String.valueOf(Soldi()-1));
 		}
-		
 	}
 	
 	private void generaSlot(int i){
-		/*if(i == 1){
-			int soldi = Integer.parseInt(text.getText());
-			int c = (int) (Math.random()*soldi * 10);
+		if(i == 1){
+			int c = (int) (Math.random()*Soldi());
 			Print("" + c);
-			if(c == 1){
+			if(c == 3){
 				cheat = true;
 			}
+			else{
+				cheat = false;
+			}
 		}
-		if(!cheat){*/
+		if(!cheat){
 			numeri[i] = (int) (Math.random()*6);
 			slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
-		/*}
+		}
 		if(cheat){
 			if(i == 1 || i == 2){
 				numeri[i] = numeri[0];
@@ -305,18 +300,19 @@ public class SlotMachine {
 				numeri[i] = (int) (Math.random()*6);
 				slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 			}
-		}*/
+		}
 	}
 	
 	private void Controlla(){
-		Print("Combo: " + numeri[0] + " " + numeri[1] + " " + numeri[2]);
 		Display.getDefault().asyncExec(new Runnable(){
 			public void run(){
 				if(clip1.isActive()){
 					clip1.setFramePosition(0);
 					clip1.stop();
 				}
-				btnGenera.setEnabled(true);
+				if(Soldi() > 0)
+					btnGenera.setEnabled(true);
+				
 				if(numeri[0] != numeri[1] || numeri[1] != numeri[2] ||  numeri[0] != numeri[2]){
 					titoloSetText("Niente combo, RIPROVA ;)", 14);
 				}
@@ -359,5 +355,15 @@ public class SlotMachine {
 	
 	private void Print(String s){
 		System.out.println(s);
+	}
+	
+	public int Soldi(){
+		int soldi = 0;
+		try{
+			soldi=Integer.parseInt(text.getText());
+		}catch(NumberFormatException e){
+			soldi = 0;
+		}
+		return soldi;
 	}
 }
