@@ -113,6 +113,7 @@ public class SlotMachine {
 	private Clip clip1;
 	private Clip clip2;
 	private boolean cheat = false;
+	private Text text_1;
 	
 	public static void main(String[] args) {
 		try {
@@ -226,7 +227,6 @@ public class SlotMachine {
 		btnGenera.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				btnGenera.setEnabled(false);
 				Gira();
 			}
 		});
@@ -246,9 +246,6 @@ public class SlotMachine {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				text.setText("10");
-				if(text.getText()==null){
-					JOptionPane.showMessageDialog(null, "Per favore, inserisci credito");
-				}
 				btnGenera.setEnabled(true);
 			}
 		});
@@ -265,20 +262,36 @@ public class SlotMachine {
 		text.setEditable(false);
 		text.setBounds(260, 306, 93, 21);
 		formToolkit.adapt(text, true, true);
+		
+		text_1 = new Text(shlSlotMachine, SWT.BORDER);
+		text_1.setBounds(446, 251, 125, 21);
+		formToolkit.adapt(text_1, true, true);
+		
+		Label lblInserisciSoldiQui = new Label(shlSlotMachine, SWT.NONE);
+		lblInserisciSoldiQui.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		lblInserisciSoldiQui.setBounds(347, 254, 93, 21);
+		formToolkit.adapt(lblInserisciSoldiQui, true, true);
+		lblInserisciSoldiQui.setText("Inserisci soldi qui:");
 	}
 	
 	private void Gira(){
-		if(Soldi() > 0){
+		if(Soldi() - SoldiInseriti() > 0 && SoldiInseriti() > 0){
+			btnGenera.setEnabled(false);
 			titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
+			text_1.setEditable(false);
+			
 			GiraSlot g = new GiraSlot();
 			g.start();
-			text.setText(String.valueOf(Soldi()-1));
+			SetSoldi(Soldi() - SoldiInseriti());
+		}
+		else{
+			Info("Reinserisci credito");
 		}
 	}
 	
 	private void generaSlot(int i){
 		if(i == 1){
-			int c = (int) (Math.random()*Soldi());
+			int c = (int) (Math.random()*Soldi()*5);
 			Print("" + c);
 			if(c == 3){
 				cheat = true;
@@ -306,6 +319,7 @@ public class SlotMachine {
 	private void Controlla(){
 		Display.getDefault().asyncExec(new Runnable(){
 			public void run(){
+				text_1.setEditable(true);
 				if(clip1.isActive()){
 					clip1.setFramePosition(0);
 					clip1.stop();
@@ -343,9 +357,8 @@ public class SlotMachine {
 	private void vincita(int m){
 		clip2.start();
 		titoloSetText("Vincita: x" + m, 20);
-		n=Integer.parseInt(text.getText());
-		n=n*m;
-		text.setText(String.valueOf(n));
+		float soldi = SoldiInseriti() * m;
+		AddSoldi(soldi);
 	}
 	
 	private void titoloSetText(String text, int font){
@@ -357,13 +370,35 @@ public class SlotMachine {
 		System.out.println(s);
 	}
 	
-	public int Soldi(){
-		int soldi = 0;
+	public float Soldi(){
+		float soldi = 0;
 		try{
-			soldi=Integer.parseInt(text.getText());
+			soldi=Float.parseFloat(text.getText());
 		}catch(NumberFormatException e){
 			soldi = 0;
 		}
 		return soldi;
+	}
+	
+	private void SetSoldi(float soldi){
+		text.setText(String.valueOf(soldi));
+	}
+	
+	private void AddSoldi(float soldi){
+		text.setText(String.valueOf(soldi + Soldi()));
+	}
+	
+	private float SoldiInseriti(){
+		float soldi = 0;
+		try{
+			soldi=Float.parseFloat(text_1.getText());
+		}catch(NumberFormatException e){
+			soldi = 0;
+		}
+		return soldi;
+	}
+	
+	private void Info(String s){
+		JOptionPane.showMessageDialog(null, s);
 	}
 }
