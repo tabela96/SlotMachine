@@ -245,7 +245,7 @@ public class SlotMachine {
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				text.setText("10");
+				text.setText("2");
 				if(text.getText()==null){
 					JOptionPane.showMessageDialog(null, "Per favore, inserisci credito");
 				}
@@ -268,30 +268,34 @@ public class SlotMachine {
 	}
 	
 	private void Gira(){
-		titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
-		GiraSlot g = new GiraSlot();
-		g.start();
 		n=Integer.parseInt(text.getText()) - 1;
-		text.setText(String.valueOf(n));
-		if(n==0){
-			btnGenera.setEnabled(false);
-			text.setText("");
+		if(n >= 0){
+			titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
+			GiraSlot g = new GiraSlot();
+			g.start();
+			
+			text.setText(String.valueOf(n));
+			if(n==0){
+				btnGenera.setEnabled(false);
+				text.setText("");
+			}
 		}
 		
 	}
 	
 	private void generaSlot(int i){
-		if(i == 1){
+		/*if(i == 1){
 			int soldi = Integer.parseInt(text.getText());
-			if((int) (Math.random()*soldi) == 1){
+			int c = (int) (Math.random()*soldi * 10);
+			Print("" + c);
+			if(c == 1){
 				cheat = true;
 			}
 		}
-		Print("Cheat: " + cheat);
-		if(!cheat){
+		if(!cheat){*/
 			numeri[i] = (int) (Math.random()*6);
 			slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
-		}
+		/*}
 		if(cheat){
 			if(i == 1 || i == 2){
 				numeri[i] = numeri[0];
@@ -301,7 +305,7 @@ public class SlotMachine {
 				numeri[i] = (int) (Math.random()*6);
 				slots[i].setImage(SWTResourceManager.getImage(SlotMachine.class, immagini.getImage(numeri[i])));
 			}
-		}
+		}*/
 	}
 	
 	private void Controlla(){
@@ -327,7 +331,7 @@ public class SlotMachine {
 						vincita(3);
 					}
 					if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
-						vincita(8);
+						vincita(5);
 					}
 					if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
 						vincita(3);
