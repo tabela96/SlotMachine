@@ -106,6 +106,7 @@ public class SlotMachine {
 	private Text text;
 	private int n;
 	private Button btnGenera;
+	private Button btnNewGame;
 	private File ruota;
 	private File vinci;
 	private AudioInputStream gira;
@@ -241,7 +242,7 @@ public class SlotMachine {
 		
 		//JOptionPane.showMessageDialog(null, "Benvenuto! Inserisci credito e premi nuova partita");
 		
-		Button btnNewGame = new Button(shlSlotMachine, SWT.NONE);
+		btnNewGame = new Button(shlSlotMachine, SWT.NONE);
 		btnNewGame.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -275,8 +276,9 @@ public class SlotMachine {
 	}
 	
 	private void Gira(){
-		if(Soldi() - SoldiInseriti() > 0 && SoldiInseriti() > 0){
+		if(Soldi() - SoldiInseriti() >= 0 && SoldiInseriti() > 0){
 			btnGenera.setEnabled(false);
+			btnNewGame.setEnabled(false);
 			titoloSetText("Best slot machine ever made by Gastaldo && Demian Oleksandr", 14);
 			text_1.setEditable(false);
 			
@@ -285,14 +287,13 @@ public class SlotMachine {
 			SetSoldi(Soldi() - SoldiInseriti());
 		}
 		else{
-			Info("Reinserisci credito");
+			Info("Inserisci credito");
 		}
 	}
 	
 	private void generaSlot(int i){
 		if(i == 1){
-			int c = (int) (Math.random()*Soldi()*5);
-			Print("" + c);
+			int c = (int) (Math.random()*Soldi());
 			if(c == 3){
 				cheat = true;
 			}
@@ -326,6 +327,7 @@ public class SlotMachine {
 				}
 				if(Soldi() > 0)
 					btnGenera.setEnabled(true);
+				btnNewGame.setEnabled(true);
 				
 				if(numeri[0] != numeri[1] || numeri[1] != numeri[2] ||  numeri[0] != numeri[2]){
 					titoloSetText("Niente combo, RIPROVA ;)", 14);
@@ -358,6 +360,7 @@ public class SlotMachine {
 		clip2.start();
 		titoloSetText("Vincita: x" + m, 20);
 		float soldi = SoldiInseriti() * m;
+		btnGenera.setEnabled(true);
 		AddSoldi(soldi);
 	}
 	
@@ -373,7 +376,7 @@ public class SlotMachine {
 	public float Soldi(){
 		float soldi = 0;
 		try{
-			soldi=Float.parseFloat(text.getText());
+			soldi=Float.parseFloat(Round(text.getText()));
 		}catch(NumberFormatException e){
 			soldi = 0;
 		}
@@ -391,7 +394,7 @@ public class SlotMachine {
 	private float SoldiInseriti(){
 		float soldi = 0;
 		try{
-			soldi=Float.parseFloat(text_1.getText());
+			soldi=Float.parseFloat(Round(text_1.getText()));
 		}catch(NumberFormatException e){
 			soldi = 0;
 		}
@@ -400,5 +403,21 @@ public class SlotMachine {
 	
 	private void Info(String s){
 		JOptionPane.showMessageDialog(null, s);
+	}
+	
+	private String Round(String s){
+		String temp = "";
+		String[] arr = s.split("\\.");
+		if(arr.length > 1){
+			temp += arr[0];
+			temp += ".";
+			for(int i = 0; (i < 2 && i < arr[1].length()); i++){
+				temp += arr[1].charAt(i);
+			}
+		}
+		else{
+			temp = arr[0];
+		}
+		return temp;
 	}
 }
