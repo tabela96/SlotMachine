@@ -294,7 +294,7 @@ public class SlotMachine {
 	private void generaSlot(int i){
 		if(i == 1){
 			int c = (int) (Math.random()*Soldi());
-			if(c == 3){
+			if(c == 1){
 				cheat = true;
 			}
 			else{
@@ -343,7 +343,7 @@ public class SlotMachine {
 						vincita(3);
 					}
 					if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
-						vincita(5);
+						vincita(10000);
 					}
 					if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
 						vincita(3);
@@ -414,6 +414,7 @@ public class SlotMachine {
 			for(int i = 0; (i < 2 && i < arr[1].length()); i++){
 				temp += arr[1].charAt(i);
 			}
+			temp += "f";
 		}
 		else{
 			temp = arr[0];
