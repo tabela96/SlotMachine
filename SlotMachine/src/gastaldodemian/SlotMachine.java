@@ -187,7 +187,9 @@ public class SlotMachine {
 	 */
 	protected void createContents() {
 		shlSlotMachine = new Shell();
+		shlSlotMachine.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlSlotMachine.setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.png"));
+		
 		shlSlotMachine.setSize(599, 400);
 		shlSlotMachine.setText("Slot Machine");
 		
@@ -236,6 +238,7 @@ public class SlotMachine {
 		btnGenera.setText("GIOCA!");		
 		
 		titolo = new Label(shlSlotMachine, SWT.NONE);
+		titolo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		titolo.setAlignment(SWT.CENTER);
 		titolo.setBounds(4, 4, 567, 61);
 		titolo.setText("Best slot machine ever made by Gastaldo && Demian Oleksandr");
@@ -254,7 +257,8 @@ public class SlotMachine {
 		formToolkit.adapt(btnNewGame, true, true);
 		btnNewGame.setText("NUOVA PARTITA");
 		
-		Label lblSaldo = new Label(shlSlotMachine, SWT.NONE);
+		Label lblSaldo = new Label(shlSlotMachine, SWT.SHADOW_NONE);
+		lblSaldo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		lblSaldo.setBounds(218, 309, 36, 15);
 		formToolkit.adapt(lblSaldo, true, true);
 		lblSaldo.setText("Saldo");
@@ -269,7 +273,7 @@ public class SlotMachine {
 		formToolkit.adapt(text_1, true, true);
 		
 		Label lblInserisciSoldiQui = new Label(shlSlotMachine, SWT.NONE);
-		lblInserisciSoldiQui.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		lblInserisciSoldiQui.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		lblInserisciSoldiQui.setBounds(347, 254, 93, 21);
 		formToolkit.adapt(lblInserisciSoldiQui, true, true);
 		lblInserisciSoldiQui.setText("Inserisci soldi qui:");
