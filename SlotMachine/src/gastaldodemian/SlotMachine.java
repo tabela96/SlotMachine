@@ -348,6 +348,7 @@ public class SlotMachine {
 					}
 					if(numeri[0] == 3 && numeri[1] == 3 && numeri[2] == 3){
 						vincita(10000);
+						JOptionPane.showMessageDialog(null, "Adesso, se hai una macchina del tempo, poi viaggiare indietro nel tempo e coregere i tuoi bruti voti\nRicordati, i viaggi nel tempo sono pericolosi");
 					}
 					if(numeri[0] == 4 && numeri[1] == 4 && numeri[2] == 4){
 						vincita(3);
