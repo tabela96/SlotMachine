@@ -291,7 +291,7 @@ public class SlotMachine {
 			SetSoldi(Soldi() - SoldiInseriti());
 		}
 		else{
-			Info("Inserisci credito");
+			Info("Credito inserito non valido");
 		}
 	}
 	
