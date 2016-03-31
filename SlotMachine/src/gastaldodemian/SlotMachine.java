@@ -115,6 +115,7 @@ public class SlotMachine {
 	private Clip clip2;
 	private boolean cheat = false;
 	private Text text_1;
+	private Button btnI;
 	
 	public static void main(String[] args) {
 		try {
@@ -190,7 +191,7 @@ public class SlotMachine {
 		shlSlotMachine.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlSlotMachine.setImage(SWTResourceManager.getImage(SlotMachine.class, "/Immagini/bar.png"));
 		
-		shlSlotMachine.setSize(599, 400);
+		shlSlotMachine.setSize(599, 397);
 		shlSlotMachine.setText("Slot Machine");
 		
 		Composite composite = new Composite(shlSlotMachine, SWT.BORDER);
@@ -274,9 +275,25 @@ public class SlotMachine {
 		
 		Label lblInserisciSoldiQui = new Label(shlSlotMachine, SWT.NONE);
 		lblInserisciSoldiQui.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		lblInserisciSoldiQui.setBounds(347, 254, 93, 21);
+		lblInserisciSoldiQui.setBounds(412, 254, 28, 21);
 		formToolkit.adapt(lblInserisciSoldiQui, true, true);
-		lblInserisciSoldiQui.setText("Inserisci soldi qui:");
+		lblInserisciSoldiQui.setText("BET:");
+		
+		btnI = new Button(shlSlotMachine, SWT.NONE);
+		btnI.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				JOptionPane.showMessageDialog(null, "Benvenuto!\nUva = x2\nArancia = x3\nLimone = x4\nCiliegia = x3\nMela = x3\nBar = x10000");
+			}
+		});
+		btnI.setBounds(10, 251, 126, 25);
+		formToolkit.adapt(btnI, true, true);
+		btnI.setText("Pay Table");
+		
+		Label lblAsd = new Label(shlSlotMachine, SWT.NONE);
+		lblAsd.setBounds(10, 377, 564, 15);
+		formToolkit.adapt(lblAsd, true, true);
+		lblAsd.setText("Uva = x2 Arancia = x3 Limone = x4 Ciliegia = x3 Mela = x3 Bar = x10000\"");
 	}
 	
 	private void Gira(){
